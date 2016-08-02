@@ -1,6 +1,8 @@
 # DockWin
 Autohotkey(https://autohotkey.com/) Script to save and restore positions of windows.
 
+Used to replace windows after switching monitor arrangement, un/docking a notebook etc.
+
 ## Hotkeys
 
 - **[Win]+0** = Restore window positions from ./WinPos.txt
