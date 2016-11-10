@@ -1,6 +1,7 @@
-;DockWin v0.4 - Save and Restore window positions when docking/undocking (using hotkeys)
+;DockWin v0.5 - Save and Restore window positions when docking/undocking (using hotkeys)
 ; Paul Troiano, 6/2014
 ; Updated by Ashley Dawson 7/2015
+; Updated by Carlo Costanzo 11/2016
 ;
 ; Hotkeys: ^ = Control; ! = Alt; + = Shift; # = Windows key; * = Wildcard;
 ;          & = Combo keys; Others include ~, $, UP (see "Hotkeys" in Help)
@@ -14,8 +15,45 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 CrLf=`r`n
 FileName:="WinPos.txt"
 
+FileInstall, DockWin.ico, %A_ScriptDir%\DockWin.ico
+Menu, Tray, Icon, %A_ScriptDir%\DockWin.ico,, 1
+
+WinTitle = DockWin v0.5
+Menu, Tray, Icon
+Menu, Tray, Tip, %WinTitle%:`nCapture and Restore Screens ; `n is a line break.
+Menu, Tray, NoStandard
+
+Menu, Tray, Add, %WinTitle%, mDoNothing
+Menu, Tray, Default, %WinTitle%
+Menu, Tray, Disable, %WinTitle%
+Menu, Tray, Add      ; time for a nice separator
+Menu, Tray, Add, Edit WinPos.txt, mEdit
+Menu, Tray, Add, Capture Screens - Shift+Win+0, mCapture
+Menu, Tray, Add, Restore Screens - Win+0, mRestore
+Menu, Tray, Add      ; time for a nice separator
+Menu, Tray, Add, Exit %WinTitle%, mExit
+
+Return
+
+; =======
+mEdit:
+; =======
+
+Run, Notepad %A_WorkingDir%\%FileName%, %A_WorkingDir%, UseErrorLevel
+
+Return     ; failsafe / probably never hits this line
+
+; ====
+mExit:
+; ====
+
+ExitApp, 0
+
+
 ;Win-0 (Restore window positions from file)
+
 #0::
+mRestore:
   WinGetActiveTitle, SavedActiveWindow
   ParmVals:="Title x y height width maximized path"
   SectionToFind:= SectionHeader()
@@ -96,6 +134,7 @@ RETURN
 
 ;Win-Shift-0 (Save current windows to file)
 #+0::
+mCapture:
 
  MsgBox, 4,Dock Windows,Save window positions?
  IfMsgBox, NO, Return
@@ -156,3 +195,7 @@ SectionHeader()
 
 	Return %line%
 }
+
+; =====
+mDoNothing: ; for labels.
+; =====
