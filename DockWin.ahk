@@ -1,7 +1,11 @@
-;DockWin v0.5 - Save and Restore window positions when docking/undocking (using hotkeys)
+;DockWin v0.6 - Save and Restore window positions when docking/undocking (using hotkeys)
 ; Paul Troiano, 6/2014
 ; Updated by Ashley Dawson 7/2015
 ; Updated by Carlo Costanzo 11/2016
+; Updated by Rene Weselowski 7/2017
+;
+; To use comandline switches compile as exe and use:
+; /restore - restore Window-Configuration on start
 ;
 ; Hotkeys: ^ = Control; ! = Alt; + = Shift; # = Windows key; * = Wildcard;
 ;          & = Combo keys; Others include ~, $, UP (see "Hotkeys" in Help)
@@ -18,7 +22,7 @@ FileName:="WinPos.txt"
 FileInstall, DockWin.ico, %A_ScriptDir%\DockWin.ico
 Menu, Tray, Icon, %A_ScriptDir%\DockWin.ico,, 1
 
-WinTitle = DockWin v0.5
+WinTitle = DockWin v0.6
 Menu, Tray, Icon
 Menu, Tray, Tip, %WinTitle%:`nCapture and Restore Screens ; `n is a line break.
 Menu, Tray, NoStandard
@@ -32,6 +36,11 @@ Menu, Tray, Add, Capture Screens - Shift+Win+0, mCapture
 Menu, Tray, Add, Restore Screens - Win+0, mRestore
 Menu, Tray, Add      ; time for a nice separator
 Menu, Tray, Add, Exit %WinTitle%, mExit
+
+Loop, %0% {                       ;for each command line parameter
+	If (%A_Index% = "/restore")        ;check if known command line parameter exists
+		Goto, mRestore
+} 
 
 Return
 
