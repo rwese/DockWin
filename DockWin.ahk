@@ -1,8 +1,8 @@
-;DockWin v0.6 - Save and Restore window positions when docking/undocking (using hotkeys)
+;DockWin v0.7 - Save and Restore window positions when docking/undocking (using hotkeys)
 ; Paul Troiano, 6/2014
 ; Updated by Ashley Dawson 7/2015
 ; Updated by Carlo Costanzo 11/2016
-; Updated by Rene Weselowski 7/2017
+; Updated by Rene Weselowski 7/2017,9/2017
 ;
 ; To use comandline switches compile as exe and use:
 ; /restore - restore Window-Configuration on start
@@ -145,7 +145,7 @@ RETURN
 #+0::
 mCapture:
 
- MsgBox, 4,Dock Windows,Save window positions?
+ MsgBox, 4,Dock Windows,Save window positions? (it will append to the file!)
  IfMsgBox, NO, Return
 
  WinGetActiveTitle, SavedActiveWindow
@@ -165,11 +165,11 @@ mCapture:
   Loop, %id%
   {
     this_id := id%A_Index%
-    WinActivate, ahk_id %this_id%
-    WinGetPos, x, y, Width, Height, A ;Wintitle
     WinGetClass, this_class, ahk_id %this_id%
     WinGetTitle, this_title, ahk_id %this_id%
-    WinGet, win_maximized, minmax, %this_title%
+    WinGet, win_maximized, minmax, ahk_class %this_class%
+    WinActivate, ahk_id %this_id%
+    WinGetPos, x, y, Width, Height, A ;Wintitle
 
 	if ( (StrLen(this_title)>0) and (this_title<>"Start") )
 	{
