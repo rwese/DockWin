@@ -22,7 +22,7 @@ FileName:="WinPos.txt"
 FileInstall, DockWin.ico, %A_ScriptDir%\DockWin.ico
 Menu, Tray, Icon, %A_ScriptDir%\DockWin.ico,, 1
 
-WinTitle = DockWin v0.6
+WinTitle = DockWin v0.7
 Menu, Tray, Icon
 Menu, Tray, Tip, %WinTitle%:`nCapture and Restore Screens ; `n is a line break.
 Menu, Tray, NoStandard
