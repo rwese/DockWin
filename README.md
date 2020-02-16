@@ -1,3 +1,9 @@
+# Abandoned
+
+I've since switched to primarely use linux, thus I can't maintain this script anymore.
+
+Please feel free to fork this repository and continue on.
+
 # DockWin
 Autohotkey(https://autohotkey.com/) Script to save and restore positions of windows.
 
